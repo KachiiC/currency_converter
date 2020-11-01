@@ -9,25 +9,26 @@ import {useForm} from 'react-hook-form'
 function App() {
 
   const {register, handleSubmit} = useForm();
-  const [myValue, setMyValue] = useState("")
-  const [exchangeValue, setExchangeValue] = useState("") 
   const [valueAmount, setValueAmount] = useState()
-  const [myExchangedValue, setMyExchangedValue] = useState()
+  const [myCurrency, setMyCurrency] = useState("")
+  const [exchangeCurrency, setExchangeCurrency] = useState("") 
+  const [exchangeResult, setExchangeResult] = useState()
   const [showResult, setShowResult] = useState(false)
 
 
   const onSubmit = data => {
+      // data.preventDefault()
       setValueAmount(document.getElementById("value-amount").value)
-      setMyValue(document.getElementById("myCurrency").value)
-      setExchangeValue(document.getElementById("convertCurrency").value)
+      setMyCurrency(document.getElementById("selectedCurrency1").value)
+      setExchangeCurrency(document.getElementById("selectedCurrency2").value)
   }
 
   const displayCurrency = CurrencyList.currencies.map((currency, index) => (
-      <option value={currency.code}>{currency.name}</option>
+      <option value={currency.code} key={index}>{currency.name}</option>
   ))
 
   useEffect(() => {
-      fetch(`https://currency-converter5.p.rapidapi.com/currency/convert?language=en&format=json&from=${myValue}&to=${exchangeValue}&amount=${valueAmount}`, {
+      fetch(`https://currency-converter5.p.rapidapi.com/currency/convert?language=en&format=json&from=${myCurrency}&to=${exchangeCurrency}&amount=${valueAmount}`, {
           "method": "GET",
           "headers": {
               "x-rapidapi-host": "currency-converter5.p.rapidapi.com",
@@ -35,36 +36,39 @@ function App() {
           }
       }).then(response => response.json())
       .then(response => {
-          setMyExchangedValue(response.rates[exchangeValue].rate)
+          console.log(response.rates[exchangeCurrency].rate)
+          setExchangeResult(response.rates[exchangeCurrency].rate)
           setShowResult(true)
       })
       .catch(err => {
           console.log(err);
       });
-  }, [exchangeValue, myValue, valueAmount, myExchangedValue])
+  }, [valueAmount, exchangeCurrency, myCurrency])
 
-  console.log(myExchangedValue)
   
   return (
       <div className="App">
           <h1>Currency Converter</h1>
           <div className="currency-form">
               <form onSubmit={handleSubmit(onSubmit)} >
-                  <input className="input-ammount" id="value-amount"/>
+                  <input 
+                    id="value-amount" 
+                    name="input-amount"
+                    className="input-amount"/>
                   <br/>
-                  <label>My currency:</label>
-                  <select id="myCurrency" className="selection-currency">
+                  <label name="my-chosen-currency">My currency:</label>
+                  <select id="selectedCurrency1" className="selection-currency">
                       {displayCurrency}
                   </select>
                   <br/>
-                  <label>Convert into:</label>
-                  <select id="convertCurrency" className="selection-currency">
+                  <label name="chosen-output-currency">Convert into:</label>
+                  <select id="selectedCurrency2" className="selection-currency">
                       {displayCurrency}
                   </select>
                   <br/>
-                  <input type="submit" ref={register} value="Submit" className="submit-button"/>
+                  <input name="submit-button" type="submit" ref={register} value="Submit" className="submit-button"/>
               </form>
-              {showResult && <h1>{myValue}: {valueAmount} = {exchangeValue}: {myExchangedValue} </h1>}
+              {showResult && <h1>{myCurrency}: {valueAmount} = {exchangeCurrency}: {exchangeResult} </h1>}
           </div>
       </div>
   )
