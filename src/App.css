@@ -1,0 +1,15 @@
+.App {
+  text-align: center;
+}
+
+.input-ammount {
+  margin: 25px;
+}
+
+.selection-currency {
+  margin: 10px;
+}
+
+.submit-button{
+  margin: 20px;
+}
