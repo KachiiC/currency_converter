@@ -36,21 +36,21 @@ function App() {
           }
       }).then(response => response.json())
       .then(response => {
-          console.log(response.rates[exchangeCurrency].rate)
-          setExchangeResult(response.rates[exchangeCurrency].rate)
+          console.log(response)
+          setExchangeResult(response.rates[exchangeCurrency].rate_for_amount)
           setShowResult(true)
       })
       .catch(err => {
           console.log(err);
-      });
-  }, [valueAmount, exchangeCurrency, myCurrency])
-
+        });
+      }, [valueAmount, myCurrency, exchangeCurrency])
+        
   
   return (
       <div className="App">
           <h1>Currency Converter</h1>
           <div className="currency-form">
-              <form onSubmit={handleSubmit(onSubmit)} >
+              <form onInput={handleSubmit(onSubmit)} >
                   <input 
                     id="value-amount" 
                     name="input-amount"
