@@ -1,4 +1,4 @@
-const CurrencyList = {
+const SavedCurrencyList = {
     
     "currencies": [
         {
@@ -789,4 +789,4 @@ const CurrencyList = {
     ]
 }
 
-export default CurrencyList
+export default SavedCurrencyList

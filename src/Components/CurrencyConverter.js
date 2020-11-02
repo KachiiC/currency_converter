@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 // Data
-import CurrencyList from 'Data/CurrencyList'
+import SavedCurrencyList from 'Data/SavedCurrencyList'
 import myRapidApiID from 'Data/MyRapidApiID'
 // CSS
 import './CurrencyConverter.css'
@@ -19,7 +19,7 @@ const CurrencyConverter = () => {
         setExchangeCurrency(document.getElementById("selectedCurrency2").value)
     }
 
-    const displayCurrency = CurrencyList.currencies.map((currency, index) => (
+    const displayCurrency = SavedCurrencyList.currencies.map((currency, index) => (
         <option value={currency.code} key={index}>{currency.name}</option>
     ))
 
