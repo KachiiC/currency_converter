@@ -1,0 +1,14 @@
+.converter-description{
+    margin: 100px 0px 40px;
+    font-weight: 400;
+}
+
+.selection-currency {
+    margin: 20px;
+}
+
+.input-amount {
+    margin: 40px;
+    padding: 5px;
+}
+
